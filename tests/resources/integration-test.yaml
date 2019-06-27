@@ -4,10 +4,10 @@ deployment:
     - "192.168.0.93:9092"
   topics:
     - topic:
-        name: "integration-test-1"
+        name: "integration-test-10"
         cleanup_policy: "delete"
         compression_type: "gzip"
     - topic:
-        name: "integration-test-2"
+        name: "integration-test-11"
         cleanup_policy: "delete"
         compression_type: "zstd"
