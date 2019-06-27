@@ -1,0 +1,9 @@
+deployment:
+  name: "test"
+  bootstrap_servers:
+    - "${changeme}:9092"
+  topics:
+    - topic:
+        name: "integration-test-2"
+        cleanup_policy: "delete"
+        compression_type: "gzip"

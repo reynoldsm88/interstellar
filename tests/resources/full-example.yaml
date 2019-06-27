@@ -1,8 +1,10 @@
 deployment:
   name: "test"
+  num_partions: 1
+  replication_factor: 1
   bootstrap_servers:
-    - "kafka-broker-1:8000"
-    - "kafka-broker-2:8000"
+    - "kafka-broker-1:9092"
+    - "kafka-broker-2:9092"
   topics:
     - topic:
         name: "test-1"

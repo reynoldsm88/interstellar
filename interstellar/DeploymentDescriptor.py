@@ -9,6 +9,7 @@ class DeploymentDescriptor:
         self.bootstrap_servers = deployment.get( "bootstrap_servers" )
 
         topics = [ ]
+        print( len( deployment.get( "topics" ) ) )
         for topic in deployment.get( "topics" ):
             topics.append( TopicDescriptor.parse( topic ) )
         self.topics = topics

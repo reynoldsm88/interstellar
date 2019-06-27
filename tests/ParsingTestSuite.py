@@ -40,8 +40,8 @@ class ParsingTestSuite( unittest.TestCase ):
         assert len( deployment.bootstrap_servers ) == 2
         assert len( deployment.topics ) == 2
 
-        assert deployment.bootstrap_servers.__contains__( "kafka-broker-1:8000" )
-        assert deployment.bootstrap_servers.__contains__( "kafka-broker-2:8000" )
+        assert deployment.bootstrap_servers.__contains__( "kafka-broker-1:9092" )
+        assert deployment.bootstrap_servers.__contains__( "kafka-broker-2:9092" )
         assert deployment.topics[ 0 ].name == "test-1"
         assert deployment.topics[ 0 ].compression_type == "gzip"
         assert deployment.topics[ 0 ].preallocate == False
