@@ -1,4 +1,4 @@
 topic:
         name: "test"
-        cleanup_policy: "DELETE"
-        compression_type: "gzip"
+        cleanup_policy: "delete"
+        compression_type: "zstd"

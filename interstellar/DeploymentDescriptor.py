@@ -1,17 +1,14 @@
-import yaml
-
 from interstellar.TopicDescriptor import TopicDescriptor
 
 
 class DeploymentDescriptor:
-    def __init__( self, name, bootstrap_servers, topics ):
-        self.name = name
-        self.bootstrap_servers = bootstrap_servers
-        self.topics = topics
+    def __init__( self, deployment_yaml: dict ):
+        print( deployment_yaml )
+        deployment = deployment_yaml.get( "deployment" )
+        self.name = deployment.get( "name" )
+        self.bootstrap_servers = deployment.get( "bootstrap_servers" )
 
-    def parse( yaml ):
-        deployment = yaml.get( "deployment" )
-        name = deployment.get( "name" )
-        bootstrap_servers = deployment.get( "bootstrap_servers" )
-        topics = TopicDescriptor.parse( deployment.get( "topics" ) )
-        return DeploymentDescriptor( name, bootstrap_servers, topics )
+        topics = [ ]
+        for topic in deployment.get( "topics" ):
+            topics.append( TopicDescriptor.parse( topic ) )
+        self.topics = topics
