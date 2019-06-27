@@ -1,4 +1,0 @@
-topic:
-        name: "test"
-        cleanup_policy: "delete"
-        compression_type: "zstd"

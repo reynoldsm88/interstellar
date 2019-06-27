@@ -1,9 +1,7 @@
-from interstellar.DeploymentDescriptor import DeploymentDescriptor
-from confluent_kafka.admin import AdminClient, NewTopic, NewPartitions, ConfigResource, ConfigSource
-from confluent_kafka import KafkaException
-import sys
-import threading
 import yaml
+from confluent_kafka.admin import AdminClient, NewTopic
+
+from interstellar.DeploymentDescriptor import DeploymentDescriptor
 
 
 class Interstellar:
@@ -31,9 +29,8 @@ class Interstellar:
         bootstrap_url = bootstrap_servers[ 1:len( bootstrap_servers ) ]  # this is a hack
         return AdminClient( { "bootstrap.servers": bootstrap_url } )
 
-    def deploy( self ):
+    def deploy( self ) -> bool:
         topics = [ ]
-        print( len( self.deployment.topics ) )
         for topic in self.deployment.topics:
             ktopic = NewTopic( topic.name,
                                num_partitions = topic.num_partitions,
@@ -48,3 +45,5 @@ class Interstellar:
                 print( "Topic {} created".format( topic ) )
             except Exception as e:
                 print( "Failed to create topic {}: {}".format( topic, e ) )
+                return False
+        return True

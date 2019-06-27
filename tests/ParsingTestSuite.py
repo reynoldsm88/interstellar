@@ -4,29 +4,10 @@ import unittest
 import yaml
 
 from interstellar.DeploymentDescriptor import DeploymentDescriptor
-from interstellar.TopicDescriptor import TopicDescriptor
 
 
 class ParsingTestSuite( unittest.TestCase ):
-    """Advanced test cases."""
-
-    def test_parse_topic( self ):
-        file_name = "tests/resources/topic-example.yaml"
-        yaml_file = open( file_name )
-        yaml_content = yaml_file.read()
-        yaml_file.close()
-
-        topic_yaml = yaml.load( yaml_content )
-        topic = TopicDescriptor( **topic_yaml.get( "topic" ) )
-
-        # assert values we supplied are set
-        assert topic.name == "test"
-        assert topic.cleanup_policy == "delete"
-        assert topic.compression_type == "zstd"
-
-        # also assert some default values
-        assert topic.delete_retention_ms == 86400000
-        assert topic.preallocate == False
+    """Configuration file parsing"""
 
     def test_parse_full_deployment( self ):
         file_name = "tests/resources/full-example.yaml"
