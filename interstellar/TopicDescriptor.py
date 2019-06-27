@@ -48,3 +48,9 @@ class TopicDescriptor:
         self.segment_jitter_ms = segment_jitter_ms
         self.unclean_leader_election_enable = unclean_leader_election_enable
         self.message_downconversion_enable = message_downconversion_enable
+
+    def parse( topic_list ):
+        topics = [ ]
+        for topic in topic_list:
+            topics.append( TopicDescriptor( **topic.get( "topic" ) ) )
+        return topics

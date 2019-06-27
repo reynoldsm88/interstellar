@@ -1,6 +1,8 @@
 deployment:
   name: "test"
-  bootstrapServers: "kafka-broker-1:8000,kafka-broker-2:8000"
+  bootstrap_servers:
+    - "kafka-broker-1:8000"
+    - "kafka-broker-2:8000"
   topics:
     - topic:
         name: "test"
