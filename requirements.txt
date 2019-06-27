@@ -1,4 +1,4 @@
-nose
-sphinx
 confluent-kafka
 pyyaml
+nose
+sphinx
