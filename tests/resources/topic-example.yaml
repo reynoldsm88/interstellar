@@ -1,0 +1,4 @@
+topic:
+        name: "test"
+        cleanup_policy: "DELETE"
+        compression_type: "gzip"

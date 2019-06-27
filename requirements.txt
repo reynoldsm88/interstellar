@@ -1,0 +1,4 @@
+nose
+sphinx
+confluent-kafka
+pyyaml
