@@ -12,7 +12,7 @@ class TopicDescriptor:
                   follower_replication_throttle_replicas = "",
                   index_interval_bytes = 4096,
                   leader_replication_throttled_replicas = "",
-                  message_format_version = "2.2-IV1",
+                  message_format_version = "2.0-IV0",
                   message_timestamp_difference_max_ms = 9223372036854775807,
                   message_timestamp_type = "CreateTime",
                   min_cleanable_dirty_ratio = 0.5,
