@@ -1,4 +1,4 @@
-IMAGE_PREFIX = docker.causeex.com/dart/
+IMAGE_PREFIX = org.reynoldsm88
 IMAGE_NAME = "interstellar"
 IMG := $(IMAGE_PREFIX)$(IMAGE_NAME)
 
