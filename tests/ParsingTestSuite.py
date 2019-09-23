@@ -29,6 +29,7 @@ class ParsingTestSuite( unittest.TestCase ):
         assert deployment.topics[ 1 ].name == "test-2"
         assert deployment.topics[ 1 ].compression_type == "zstd"
         assert deployment.topics[ 1 ].preallocate == True
+        assert deployment.topics[ 1 ].max_message_bytes == 50000000
 
 
 if __name__ == '__main__':
