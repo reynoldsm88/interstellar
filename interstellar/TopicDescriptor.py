@@ -83,6 +83,6 @@ class TopicDescriptor:
             "segment.jitter.ms": self.segment_jitter_ms,
             "unclean.leader.election.enable": self.unclean_leader_election_enable,
             "message.downconversion.enable": self.message_downconversion_enable,
-            "message.max.bytes": self.max_message_bytes
+            "max.message.bytes": self.max_message_bytes
         }
         return topic_config
