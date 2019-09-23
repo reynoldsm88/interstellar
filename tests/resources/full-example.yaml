@@ -15,3 +15,4 @@ deployment:
         cleanup_policy: "compact"
         compression_type: "zstd"
         preallocate: true
+        max_message_bytes: 50000000

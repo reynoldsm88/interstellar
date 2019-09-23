@@ -25,7 +25,8 @@ class TopicDescriptor:
                   segment_index_bytes = 10485760,
                   segment_jitter_ms = 604800000,
                   unclean_leader_election_enable = False,
-                  message_downconversion_enable = True ):
+                  message_downconversion_enable = True,
+                  max_message_bytes = 1000012 ):
         self.name = name
         self.num_partitions = num_partions
         self.replication_factor = repllication_factor
@@ -52,6 +53,7 @@ class TopicDescriptor:
         self.segment_jitter_ms = segment_jitter_ms
         self.unclean_leader_election_enable = unclean_leader_election_enable
         self.message_downconversion_enable = message_downconversion_enable
+        self.max_message_bytes = max_message_bytes
 
     def parse( topic_yaml ):
         return TopicDescriptor( **topic_yaml.get( "topic" ) )
@@ -80,6 +82,7 @@ class TopicDescriptor:
             "segment.index.bytes": self.segment_index_bytes,
             "segment.jitter.ms": self.segment_jitter_ms,
             "unclean.leader.election.enable": self.unclean_leader_election_enable,
-            "message.downconversion.enable": self.message_downconversion_enable
+            "message.downconversion.enable": self.message_downconversion_enable,
+            "message.max.bytes": self.max_message_bytes
         }
         return topic_config
