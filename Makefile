@@ -1,19 +1,14 @@
 IMAGE_PREFIX = org.reynoldsm88
 IMAGE_NAME = "interstellar"
-IMG := $(IMAGE_PREFIX)$(IMAGE_NAME)
+IMG := $(IMAGE_PREFIX)/$(IMAGE_NAME)
 
-init:
-	pip install -r requirements.txt
-
-build: init
+python-build:
+	pip3 install -r requirements.txt
 	python3 setup.py build
-
-test: build
 	python3 setup.py test
 
-docker-build: test
+docker-build: python-build
 	docker build -t $(IMG):latest .
 
-clean:
-	docker images | grep $(IMG) | grep -v IMAGE | awk '{print $3}'
-	docker system prune --force
+docker-push: docker-build
+	docker push $(IMG)

@@ -11,6 +11,6 @@ COPY README.md /opt/app/interstellar
 COPY LICENSE /opt/app/interstellar
 
 RUN cd /opt/app/interstellar && \
-    make build
+    make python-build
 
 ENTRYPOINT /bin/bash
