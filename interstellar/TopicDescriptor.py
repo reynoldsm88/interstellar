@@ -1,8 +1,8 @@
 class TopicDescriptor:
     def __init__( self,
                   name = "default",
-                  num_partions = 1,
-                  repllication_factor = 1,
+                  num_partitions = 1,
+                  replication_factor = 1,
                   cleanup_policy = "delete",
                   compression_type = "gzip",
                   delete_retention_ms = 86400000,
@@ -28,8 +28,8 @@ class TopicDescriptor:
                   message_downconversion_enable = True,
                   max_message_bytes = 1000012 ):
         self.name = name
-        self.num_partitions = num_partions
-        self.replication_factor = repllication_factor
+        self.num_partitions = num_partitions
+        self.replication_factor = replication_factor
         self.cleanup_policy = cleanup_policy
         self.compression_type = compression_type
         self.delete_retention_ms = delete_retention_ms
@@ -60,6 +60,7 @@ class TopicDescriptor:
 
     def get_topic_config( self ):
         topic_config = {
+            "num.partitions": self.num_partitions,
             "cleanup.policy": self.cleanup_policy,
             "compression.type": self.compression_type,
             "delete.retention.ms": self.delete_retention_ms,
