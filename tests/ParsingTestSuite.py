@@ -26,10 +26,12 @@ class ParsingTestSuite( unittest.TestCase ):
         assert deployment.topics[ 0 ].name == "test-1"
         assert deployment.topics[ 0 ].compression_type == "gzip"
         assert deployment.topics[ 0 ].preallocate == False
+        assert deployment.topics[ 0 ].num_partitions == 3
         assert deployment.topics[ 1 ].name == "test-2"
         assert deployment.topics[ 1 ].compression_type == "zstd"
         assert deployment.topics[ 1 ].preallocate == True
         assert deployment.topics[ 1 ].max_message_bytes == 50000000
+        assert deployment.topics[ 1 ].replication_factor == 2
 
 
 if __name__ == '__main__':
