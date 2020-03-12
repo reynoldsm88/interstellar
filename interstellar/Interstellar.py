@@ -35,7 +35,7 @@ class Interstellar:
             ktopic = NewTopic( topic.name,
                                num_partitions = topic.num_partitions,
                                replication_factor = topic.replication_factor,
-                               config = topic.get_topic_confi() )
+                               config = topic.get_topic_config() )
             topics.append( ktopic )
 
         results = self.admin_client.create_topics( topics )

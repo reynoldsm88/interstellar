@@ -58,7 +58,7 @@ class TopicDescriptor:
     def parse( topic_yaml ):
         return TopicDescriptor( **topic_yaml.get( "topic" ) )
 
-    def get_topic_confi( self ):
+    def get_topic_config( self ):
         topic_config = {
             "cleanup.policy": self.cleanup_policy,
             "compression.type": self.compression_type,
