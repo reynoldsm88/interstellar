@@ -60,7 +60,6 @@ class TopicDescriptor:
 
     def get_topic_config( self ):
         topic_config = {
-            "num.partitions": self.num_partitions,
             "cleanup.policy": self.cleanup_policy,
             "compression.type": self.compression_type,
             "delete.retention.ms": self.delete_retention_ms,

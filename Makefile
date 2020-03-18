@@ -1,5 +1,5 @@
-IMAGE_PREFIX = org.reynoldsm88
-IMAGE_NAME = "interstellar"
+IMAGE_PREFIX = reynoldsm88
+IMAGE_NAME = interstellar
 IMG := $(IMAGE_PREFIX)/$(IMAGE_NAME)
 
 python-build:
