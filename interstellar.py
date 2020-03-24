@@ -3,9 +3,6 @@ from os.path import exists
 
 from interstellar.Interstellar import Interstellar
 
-# if this is false it will never return success, setting to false is for debugging only
-do_success_flag = True
-
 
 def do_deploy( config_file ) -> bool:
     deployer = Interstellar( config_file )
