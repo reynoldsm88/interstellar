@@ -30,8 +30,7 @@ if __name__ == '__main__':
             exit( 1 )
         else:
             print( "provisioning successful" )
-            if do_success_flag is True:
-                success_flag = open( ".success", "w+" )
-                success_flag.write( "" )
-                success_flag.close()
-            exit()
+            success_flag = open( ".success", "w+" )
+            success_flag.write( "" )
+            success_flag.close()
+            exit( 0 )

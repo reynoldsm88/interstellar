@@ -1,4 +1,9 @@
 import yaml
+try:
+    from yaml import FullLoader as DefaultLoader
+except ImportError:
+    from yaml import Loader as DefaultLoader
+
 from confluent_kafka.admin import AdminClient, NewTopic
 
 from interstellar.DeploymentDescriptor import DeploymentDescriptor
@@ -13,7 +18,7 @@ class Interstellar:
         yaml_content = yaml_file.read()
         yaml_file.close()
 
-        deployment_yaml = yaml.load( yaml_content )
+        deployment_yaml = yaml.load( yaml_content, Loader=DefaultLoader )
         self.deployment = DeploymentDescriptor( deployment_yaml )
 
         self.admin_client = self.connect()
