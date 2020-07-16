@@ -29,10 +29,7 @@ class Interstellar:
         return True
 
     def connect( self ):
-        bootstrap_servers = ""
-        for broker in self.deployment.bootstrap_servers:
-            bootstrap_servers += "," + broker
-        bootstrap_url = bootstrap_servers[ 1:len( bootstrap_servers ) ]  # this is a hack
+        bootstrap_url = ','.join( self.deployment.bootstrap_servers )
         return AdminClient( { "bootstrap.servers": bootstrap_url } )
 
     def deploy( self ) -> bool:
