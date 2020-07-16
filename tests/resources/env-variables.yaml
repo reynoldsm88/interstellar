@@ -1,0 +1,18 @@
+deployment:
+  name: "test"
+  replication_factor: 1
+  bootstrap_servers:
+    - "_env_"
+  topics:
+    - topic:
+        num_partitions: 3
+        name: "test-1"
+        cleanup_policy: "delete"
+        compression_type: "gzip"
+    - topic:
+        name: "test-2"
+        replication_factor: 2
+        cleanup_policy: "compact"
+        compression_type: "zstd"
+        preallocate: true
+        max_message_bytes: 50000000

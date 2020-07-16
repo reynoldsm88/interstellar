@@ -3,6 +3,8 @@ import unittest
 
 import yaml
 
+import os
+
 from interstellar.DeploymentDescriptor import DeploymentDescriptor
 
 
@@ -32,6 +34,17 @@ class ParsingTestSuite( unittest.TestCase ):
         assert deployment.topics[ 1 ].preallocate == True
         assert deployment.topics[ 1 ].max_message_bytes == 50000000
         assert deployment.topics[ 1 ].replication_factor == 2
+
+    def test_parse_environment_variables( self ):
+        os.environ[ "KAFKA_BOOTSTRAP_SERVERS" ] = "mytest:9092"
+
+        with open( "tests/resources/env-variables.yaml" ) as file:
+            deployment_yaml = yaml.load( file )
+            deployment = DeploymentDescriptor( deployment_yaml )
+
+            for i in range( 0, 10 ):
+                print( "=================" )
+            print( deployment.bootstrap_servers )
 
 
 if __name__ == '__main__':
