@@ -1,4 +1,5 @@
 import yaml
+
 try:
     from yaml import FullLoader as DefaultLoader
 except ImportError:
@@ -18,7 +19,7 @@ class Interstellar:
         yaml_content = yaml_file.read()
         yaml_file.close()
 
-        deployment_yaml = yaml.load( yaml_content, Loader=DefaultLoader )
+        deployment_yaml = yaml.load( yaml_content, Loader = DefaultLoader )
         self.deployment = DeploymentDescriptor( deployment_yaml )
 
         self.admin_client = self.connect()
@@ -47,8 +48,8 @@ class Interstellar:
         for topic, f in results.items():
             try:
                 f.result()  # The result itself is None
-                print( "Topic {} created".format( topic ) )
+                print( f"Topic {topic} created" )
             except Exception as e:
-                print( "Failed to create topic {}: {}".format( topic, e ) )
+                print( f"Failed to create topic {topic}: {e}" )
                 return False
         return True

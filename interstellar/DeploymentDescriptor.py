@@ -1,3 +1,5 @@
+import os
+
 from interstellar.TopicDescriptor import TopicDescriptor
 
 
@@ -7,6 +9,10 @@ class DeploymentDescriptor:
         deployment = deployment_yaml.get( "deployment" )
         self.name = deployment.get( "name" )
         self.bootstrap_servers = deployment.get( "bootstrap_servers" )
+
+        if '_env_' in self.bootstrap_servers:
+            env_servers = [ os.environ.get( "KAFKA_BOOTSTRAP_SERVERS" ) if host == '_env_' else host for host in self.bootstrap_servers ]
+            self.bootstrap_servers = env_servers
 
         topics = [ ]
         for topic in deployment.get( "topics" ):
