@@ -5,7 +5,7 @@ from interstellar.TopicDescriptor import TopicDescriptor
 
 class DeploymentDescriptor:
     def __init__( self, deployment_yaml: dict ):
-        print( "deploying the following configuration : \n" + str( deployment_yaml ) )
+
         deployment = deployment_yaml.get( "deployment" )
         self.name = deployment.get( "name" )
         self.bootstrap_servers = deployment.get( "bootstrap_servers" )
@@ -17,4 +17,13 @@ class DeploymentDescriptor:
         topics = [ ]
         for topic in deployment.get( "topics" ):
             topics.append( TopicDescriptor.parse( topic ) )
+
+        print( "deploying the following configuration : \n" + str( deployment_yaml ) )
+        print( f'deployment_name: {self.name}' )
+        print( f'bootstrap_servers: {self.bootstrap_servers}' )
+        print( 'topics:[' )
+        for t in topics:
+            print( f'\t{t.name}' )
+        print( ']' )
+
         self.topics = topics
