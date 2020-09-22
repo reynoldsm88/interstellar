@@ -42,9 +42,7 @@ class ParsingTestSuite( unittest.TestCase ):
             deployment_yaml = yaml.load( file )
             deployment = DeploymentDescriptor( deployment_yaml )
 
-            for i in range( 0, 10 ):
-                print( "=================" )
-            print( deployment.bootstrap_servers )
+            assert 'mytest:9092' in deployment.bootstrap_servers
 
 
 if __name__ == '__main__':

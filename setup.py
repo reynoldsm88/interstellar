@@ -20,5 +20,9 @@ setup(
     author_email = 'reynoldsm88@gmail.com',
     url = 'https://github.com/reynoldsm88/interstellar',
     license = license,
-    packages = find_packages( exclude = ('tests', 'docs') )
+    packages = find_packages( exclude = ('tests', 'docs') ),
+    install_requires = [ 'confluent-kafka', 'pyyaml' ],
+    extras_require = {
+        "test": [ 'nose' ]
+    }
 )
