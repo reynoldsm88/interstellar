@@ -12,6 +12,7 @@ from interstellar.DeploymentDescriptor import DeploymentDescriptor
 
 from tenacity import retry, stop_after_attempt, wait_fixed, TryAgain, RetryError
 
+
 class Interstellar:
     def __init__( self, config_file ):
         if self.check_config( config_file ) is False:
@@ -23,10 +24,9 @@ class Interstellar:
 
         deployment_yaml = yaml.load( yaml_content, Loader = DefaultLoader )
         self.deployment = DeploymentDescriptor( deployment_yaml )
-        retry_decorator = retry(stop = stop_after_attempt(self.deployment.number_retries),
-                                wait = wait_fixed(self.deployment.retry_delay))
-        self.create_topics = retry_decorator(self.__create_topic_with_retry)
-
+        retry_decorator = retry( stop = stop_after_attempt( self.deployment.number_retries ),
+                                 wait = wait_fixed( self.deployment.retry_delay ) )
+        self.create_topics = retry_decorator( self.__create_topic_with_retry )
 
     # TODO @michael - implement some kind of validation...
     def check_config( self, config_file ):
@@ -46,18 +46,18 @@ class Interstellar:
             topics.append( ktopic )
 
         try:
-            self.create_topics(topics)
+            self.create_topics( topics )
         except RetryError:
-            print(f'Unable to provision topics after {self.create_topics.retry.statistics["attempt_number"]} retries')
+            print( f'Unable to provision topics after {self.create_topics.retry.statistics[ "attempt_number" ]} retries' )
             return False
         except Exception as ex:
-            print(f'Unable to provision topics: {ex}')
+            print( f'Unable to provision topics: {ex}' )
             return False
 
         return True
 
-    def __create_topic_with_retry(self, topics: []):
-        print('connecting to Kafka')
+    def __create_topic_with_retry( self, topics: [ ] ):
+        print( 'connecting to Kafka' )
         admin_client = self.connect()
         results = admin_client.create_topics( topics )
         for topic, f in results.items():
@@ -66,7 +66,7 @@ class Interstellar:
                 print( f"Topic {topic} created" )
             except KafkaException as e:
                 print( f"Failed to create topic {topic}: {e}" )
-                if e.args[0].code() != KafkaError.TOPIC_ALREADY_EXISTS:
+                if e.args[ 0 ].code() != KafkaError.TOPIC_ALREADY_EXISTS:
                     raise TryAgain
                 else:
                     print( f'{topic} already exists' )

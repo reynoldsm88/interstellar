@@ -19,7 +19,7 @@ class DeploymentDescriptor:
             self.bootstrap_servers = env_servers
         if self.number_retries == '_env_':
             self.number_retries = int( os.environ.get( "NUMBER_RETRIES" ) )
-        if self.retry_delay == '_env_' :
+        if self.retry_delay == '_env_':
             self.retry_delay = float( os.environ.get( "RETRY_DELAY" ) )
 
         topics = [ ]
