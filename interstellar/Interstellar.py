@@ -5,10 +5,12 @@ try:
 except ImportError:
     from yaml import Loader as DefaultLoader
 
-from confluent_kafka.admin import AdminClient, NewTopic
+from confluent_kafka.admin import AdminClient, NewTopic, KafkaException
+from confluent_kafka import KafkaError
 
 from interstellar.DeploymentDescriptor import DeploymentDescriptor
 
+from tenacity import retry, stop_after_attempt, wait_fixed, TryAgain, RetryError
 
 class Interstellar:
     def __init__( self, config_file ):
@@ -21,10 +23,12 @@ class Interstellar:
 
         deployment_yaml = yaml.load( yaml_content, Loader = DefaultLoader )
         self.deployment = DeploymentDescriptor( deployment_yaml )
+        retry_decorator = retry(stop = stop_after_attempt(self.deployment.number_retries),
+                                wait = wait_fixed(self.deployment.retry_delay))
+        self.create_topics = retry_decorator(self.__create_topic_with_retry)
 
-        self.admin_client = self.connect()
 
-    # TODO @michael - impelent some kind of validation...
+    # TODO @michael - implement some kind of validation...
     def check_config( self, config_file ):
         return True
 
@@ -41,12 +45,32 @@ class Interstellar:
                                config = topic.get_topic_config() )
             topics.append( ktopic )
 
-        results = self.admin_client.create_topics( topics )
+        try:
+            self.create_topics(topics)
+        except RetryError:
+            print(f'Unable to provision topics after {self.create_topics.retry.statistics["attempt_number"]} retries')
+            return False
+        except Exception as ex:
+            print(f'Unable to provision topics: {ex}')
+            return False
+
+        return True
+
+    def __create_topic_with_retry(self, topics: []):
+        print('connecting to Kafka')
+        admin_client = self.connect()
+        results = admin_client.create_topics( topics )
         for topic, f in results.items():
             try:
                 f.result()  # The result itself is None
                 print( f"Topic {topic} created" )
-            except Exception as e:
+            except KafkaException as e:
                 print( f"Failed to create topic {topic}: {e}" )
-                return False
+                if e.args[0].code() != KafkaError.TOPIC_ALREADY_EXISTS:
+                    raise TryAgain
+                else:
+                    print( f'{topic} already exists' )
+            except Exception as ex:
+                print( f"Failed to create topic {topic}: {ex}" )
+                raise TryAgain
         return True

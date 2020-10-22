@@ -1,6 +1,8 @@
 deployment:
   name: "test"
   replication_factor: 1
+  number_retries:  "_env_"
+  retry_delay: "_env_"
   bootstrap_servers:
     - "_env_"
   topics:
@@ -11,7 +13,7 @@ deployment:
         compression_type: "gzip"
     - topic:
         name: "test-2"
-        replication_factor: 2
+        replication_factor: 1
         cleanup_policy: "compact"
         compression_type: "zstd"
         preallocate: true

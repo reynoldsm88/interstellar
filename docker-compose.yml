@@ -1,0 +1,50 @@
+version: "3.7"
+
+services:
+  zookeeper-1:
+    image: zookeeper:3.4.9
+    hostname: zookeeper-1
+    ports:
+      - "2181:2181"
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_PORT: 2181
+      ZOO_SERVERS: server.1=zookeeper-1:2188:3188
+    networks:
+      - interstellar-network
+
+  kafka-broker-1:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-broker-1
+    environment:
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=DEBUG"
+      KAFKA_LOG4J_ROOT_LOGLEVEL: DEBUG
+      KAFKA_TOOLS_LOG4J_LOGLEVEL: DEBUG
+      KAKFA_LISTENERS: INTERNAL://9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker-1:9092,EXTERNAL://localhost:19092
+      KAFKA_BROKER_ID: 1
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper-1:2181"
+    ports:
+      - 9092:9092
+      - 19092:19092
+    networks:
+      - interstellar-network
+
+  auto-topic-provisioner:
+    image: reynoldsm88/interstellar:latest
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: 'kafka-broker-1:9092'
+      NUMBER_RETRIES: 3
+      RETRY_DELAY: 1
+    working_dir: /opt/app/interstellar
+    volumes:
+      - ./tests/resources/env-variables.yaml:/opt/config/topics.yml
+    entrypoint: ['python3', 'interstellar.py', '--deployment_config',  '/opt/config/topics.yml']
+    networks:
+      - interstellar-network
+
+networks:
+  interstellar-network:
