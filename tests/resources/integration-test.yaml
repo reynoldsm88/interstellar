@@ -1,7 +1,9 @@
 deployment:
   name: "test"
   bootstrap_servers:
-    - "192.168.0.93:9092"
+    - "localhost:19092"
+  number_retries: 3
+  retry_delay: 0.5
   topics:
     - topic:
         name: "integration-test-10"

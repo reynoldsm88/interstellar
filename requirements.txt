@@ -2,3 +2,4 @@ confluent-kafka
 pyyaml
 nose
 sphinx
+tenacity

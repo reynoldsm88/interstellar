@@ -37,6 +37,8 @@ class ParsingTestSuite( unittest.TestCase ):
 
     def test_parse_environment_variables( self ):
         os.environ[ "KAFKA_BOOTSTRAP_SERVERS" ] = "mytest:9092"
+        os.environ[ "NUMBER_RETRIES" ] = "3"
+        os.environ[ "RETRY_DELAY " ] = "1"
 
         with open( "tests/resources/env-variables.yaml" ) as file:
             deployment_yaml = yaml.load( file )
